@@ -41,6 +41,6 @@
     "last 2 versions"
   ],
   "dependencies": {
-    "vue": "^3.2.36"
+    "vue": "^3.0.7"
   }
 }

@@ -27,3 +27,17 @@ v-once 디렉티브를 사용하여 데이터가 변경되어도 갱신되지 �
 <div v-bind:id="dynamicId"></div>
 ```
 v-bind 디렉티브는 엘리먼트의 id 속성을 컴포넌트의 dynamicId 속성과 동기화된 상태로 유지하도록 Vue에 지시합니다. 바인딩된 값이 null 또는 undefined이면 엘리먼트의 속성이 제거된 상태로 렌더링 됩니다.
+
+```html
+<div :id="dynamicId"></div>
+```
+v-bind는 매우 일반적으로 사용되기 때문에 전용 단축 문법이 있습니다:
+
+## v-on 약어
+
+```html
+<!-- 전체 문법 -->
+<a v-on:click="doSomething">...</a>
+<!-- 약어 -->
+<a @click="doSomething">...</a>
+```

@@ -1,133 +1,43 @@
-# Vue3-webpack-template
+# Vue3 문법
 
-## Package Install
+## 보간법
 
-```bash
-npm i vue@next
-npm i -D vue-loader@next vue-style-loader @vue/compiler-sfc
-npm i -D file-loader
-npm i -D eslint eslint-plugin-vue babel-eslint
-```
-
-## webpack.config.js 수정
-
-module/rules
-- vue라는 확장자를 가지고 있는 파일을 필터링해서 vue-loader가 실행될 수 있게 설정
-- file을 읽을 수 있는 file-loader
-
-test
-- style부분이 해석 될 수 있게 vue-style-loader 추가
-
-전역 모듈
-- VueLoader에서 Plugin을 가져와 해당 내용을 plugins에서 생성자 함수를 실행하도록 설정
-
-module.exports/resolve
-- 경로 명시 시 확장자 생략할 수 있게 함
-- alias: 경로별칭 사용하면 해당 경로로 바로 jump
-  ```Javascript
-  // alias=경로별칭
-    // ~ 사용하면 해당 경로로 바로 jump
-    alias: {
-      '~': path.resolve(__dirname, 'src'), // 폴더가 모여 있는 경로
-      'assets': path.resolve(__dirname, 'src/assets') // 실제 이미지가 있는 경로
-    }
-  },
-  ```
-
-## 시작하기
-
-```HTML
-<body>
-  <div id="app"></div>
-</body>
-```
-
-```Javascript
-// CDN
-// import Vue from 'vue'
-
-// CLI
-// Vue 객체가 없다
-import { createApp } from 'vue'
-import App from './App.vue'
-
-// HTML에서 app이라는 값을 가지고 있는 해당 요소에 vue 프로젝트 연결
-// 1. CDN
-//Vue.createApp(App).mount('#app')
-
-// 2. CLI
-createApp(App).mount('#app')
-```
-
-```bash
-npm run dev
-```
-
-## Code 검사 : .eslintrc.js 파일 생성
-
-Google 
-- vue3 eslint검색 
-  - vue/html-closing-bracket-newline</br>
-- eslint rules
-
-VScode
-- 파일 저장 시 eslint 규칙에 맞게 수정하겠다.
-- Cmd + shift + p : eslint - Edit in settings.json (Preferences:Open Settings(JSON))
-  ```JS
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  }
-  ```
-
-!! eslint 활성화 및 settings 해결 !!
-- Extensions : ESLint 
-- Parsing Error
-  ```npm install @babel/eslint-parser --save-dev```
-- 재부팅
-
-## eslint Branch 생성
-
-Github 저장소에 eslint branch 생성 후 명령어 
-
-```bash
-npx degit JunesWorld/vue3-webpack-template#eslint vue3-practice
-cd vue3-practice
-code . -r
-npm install
-```
-
-## 반응성(Reactivity)
-
-데이터를 정의하고 그것을 갱신할 수 있는 이벤트의 핸들러를 만듬
-
-- count data를 갱신하면 연결된 화면도 갱신
-- data에 숫자 0을 넣어 초기화하여 화면에 출력
-- increase라는 함수를 만들어 함수가 실행될 때마다 count data를 this라는 키워드로 접근하여 숫자 1씩 증가시킴(this = App.vue 파일의 script 부분)
-- increase는 this로 count에 접근하여 실행되면 1씩 증가시키는데 h1 tag를 클릭하면 화면에 출력
-
+데이터 바인딩의 가장 기본적인 형태는 "Mustache"(이중 중괄호) 문법을 사용한 텍스트 보간법입니다.
 
 ```html
-<template>
-  <h1 @click="increase">
-    {{ count }}
-  </h1>
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      count: 0
-    }
-  },
-  methods: {
-    increase() {
-      this.count += 1
-    }
-  }
-}
-</script>
+<span>메세지: {{ msg }}</span>
 ```
 
+이중 중괄호 태그 내 msg는 해당 컴포넌트 인스턴스의 msg 속성의 값으로 대체됩니다. 또한 msg 속성이 변경될 때마다 업데이트됩니다.</br>
 
-## Module 호환 Error
+v-once 디렉티브를 사용하여 데이터가 변경되어도 갱신되지 않는 일회성 보간을 수행할 수 있습니다.
+
+## HTML 출력
+
+```html
+<p>텍스트 보간법 사용: {{ rawHtml }}</p>
+<p>v-html 디렉티브 사용: <span v-html="rawHtml"></span></p>
+```
+웹사이트에서 임의의 HTML을 동적으로 렌더링하면 XSS 취약점이 쉽게 발생할 수 있으므로 매우 위험할 수 있습니다. 신뢰할 수 있는 컨텐츠에만 v-html을 사용하고 사용자가 제공한 컨텐츠에는 절대 사용하지 마세요.
+
+## 속성 바인딩
+
+이중 중괄호는 HTML 속성(attribute) 내에서 사용할 수 없습니다. 대신 v-bind 디렉티브를 사용하세요:
+```html
+<div v-bind:id="dynamicId"></div>
+```
+v-bind 디렉티브는 엘리먼트의 id 속성을 컴포넌트의 dynamicId 속성과 동기화된 상태로 유지하도록 Vue에 지시합니다. 바인딩된 값이 null 또는 undefined이면 엘리먼트의 속성이 제거된 상태로 렌더링 됩니다.
+
+```html
+<div :id="dynamicId"></div>
+```
+v-bind는 매우 일반적으로 사용되기 때문에 전용 단축 문법이 있습니다:
+
+## v-on 약어
+
+```html
+<!-- 전체 문법 -->
+<a v-on:click="doSomething">...</a>
+<!-- 약어 -->
+<a @click="doSomething">...</a>
+```

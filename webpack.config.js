@@ -1,15 +1,16 @@
+const _require = id => require(require.resolve(id, { paths: [require.main.path] }))
 // import
 // 절대경로 명시
-const path = require('path')
+const path = _require('path')
 
 // 개발 서버 오픈
 // plugins
-const HtmlPlugin = require('html-webpack-plugin')
+const HtmlPlugin = _require('html-webpack-plugin')
 
 // Favicon 설정
-const CopyPlugin = require('copy-webpack-plugin')
+const CopyPlugin = _require('copy-webpack-plugin')
 
-const { VueLoaderPlugin } = require('vue-loader')
+const { VueLoaderPlugin } = _require('vue-loader')
 
 // export
 module.exports =  {
@@ -64,6 +65,7 @@ module.exports =  {
       },
       {
         test: /\.js$/,
+        exclude: /node_modules/,
         use: [
           'babel-loader'
         ]
@@ -90,6 +92,8 @@ module.exports =  {
   ],
 
   devServer: {
-    host: 'localhost'
+    host: 'localhost',
+    port: 8080,
+    hot: true
   }
 }

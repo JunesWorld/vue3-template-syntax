@@ -400,3 +400,91 @@ export default {
 }
 </script>
 ```
+
+## 조건부 렌더링
+
+- v-if
+v-if 디렉티브는 조건에 따라 블록을 렌더링할 때 사용합니다. 블록은 디렉티브의 표현식이 true 값을 반환할 때만 렌더링됩니다.</br>
+awesome이라는 데이터가 truthy(참으로 해석될 수 있는 값)이라면 화면에 렌더링
+```html
+<h1 v-if="awesome">Vue is awesome!<h1>
+```
+v-else 와 함께 "else 블록"을 추가하는 것도 가능합니다.
+```html
+<h1 v-if="awesome">Vue is awesome!</h1>
+<h1 v-else>Oh no</h1>
+```
+
+- if구문
+```html
+<template>
+  <button @click="handler">
+    Click me!
+  </button>
+  <h1 v-if="isShow">
+    Hello?!
+  </h1>
+  <h1 v-else-if="count > 3">
+    Count > 3
+  </h1>
+  <h1 v-else>
+    Good~
+  </h1>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      isShow: true,
+      count: 0
+    }
+  },
+  methods: {
+    handler() {
+      this.isShow = !this.isShow
+      this.count += 1
+    }
+  }
+}
+</script>
+```
+
+- template
+```html
+<template>
+  <button @click="handler">
+    Click me!
+  </button>
+  <!-- 
+    [template]
+    - 특정요소들을 그룹으로 보이거나 보이지않게하는 것 
+  -->
+  <template v-if="isShow">
+    <h1>Title</h1>
+    <p>Paragraph 1</p>
+    <p>Paragraph 2</p>
+  </template>
+</template>
+```
+
+- v-show
+```html
+<template>
+  <button @click="handler">
+    Click me!
+  </button>
+  <!-- 
+    [v-show]
+    - false일 때, 구조적으로 렌더링을 하지만,
+    - 화면에 출력되지 않게 display: none;
+   -->
+  <h1 v-show="isShow">
+    Hello?!
+  </h1>
+</template>
+```
+
+- v-if VS v-show
+v-if는 조건부 렌더링(런타임 시 조건이 변경되지 않는다면 사용)</br>
+v-show는 일단 렌더링을 해놓고 단순히 css속성만 가지고 화면에 출력여부 결정(자주 전환 시 사용)

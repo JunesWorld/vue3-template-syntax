@@ -1,7 +1,13 @@
 <template>
-  <h1
-    :style="[fontStyle, backgroundStyle]"
-    @click="changeStyle">
+  <button @click="handler">
+    Click me!
+  </button>
+  <!-- 
+    [v-show]
+    - false일 때, 구조적으로 렌더링을 하지만,
+    - 화면에 출력되지 않게 display: none;
+   -->
+  <h1 v-show="isShow">
     Hello?!
   </h1>
 </template>
@@ -10,19 +16,14 @@
 export default {
   data() {
     return {
-      fontStyle: {
-        color: 'orange',
-        fontSize: '30px'
-      },
-      backgroundStyle: {
-        backgroundColor: 'black'
-      }
+      isShow: false,
+      count: 0
     }
   },
   methods: {
-    changeStyle() {
-      this.fontStyle.color = 'red'
-      this.fontStyle.fontSize = '50px'
+    handler() {
+      this.isShow = !this.isShow
+      this.count += 1
     }
   }
 }

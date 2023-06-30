@@ -327,3 +327,43 @@ data() {
   }
 }
 ```
+
+- App.vue(1)
+```html
+<template>
+  <!-- 
+    [Class Binding]
+    active class 추가 
+    - isActive data 영향
+    - true / false 
+  -->
+  <h1
+    :class="{ active: isActive }"
+    @click="activate">
+    Hello?!({{ isActive }})
+  </h1>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      isActive: false
+    }
+  },
+  methods: {
+    activate() {
+      this.isActive = true
+    }
+  }
+}
+</script>
+
+<style scoped>
+/* scoped = 이 파일 외에서는 영향x */
+  .active {
+    color: red;
+    font-weight: bold;
+  }
+</style>
+```

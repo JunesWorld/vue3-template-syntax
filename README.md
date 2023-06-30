@@ -485,6 +485,6 @@ export default {
 </template>
 ```
 
-- v-if VS v-show
+- v-if VS v-show</br>
 v-if는 조건부 렌더링(런타임 시 조건이 변경되지 않는다면 사용)</br>
 v-show는 일단 렌더링을 해놓고 단순히 css속성만 가지고 화면에 출력여부 결정(자주 전환 시 사용)

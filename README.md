@@ -467,3 +467,24 @@ export default {
   </template>
 </template>
 ```
+
+- v-show
+```html
+<template>
+  <button @click="handler">
+    Click me!
+  </button>
+  <!-- 
+    [v-show]
+    - false일 때, 구조적으로 렌더링을 하지만,
+    - 화면에 출력되지 않게 display: none;
+   -->
+  <h1 v-show="isShow">
+    Hello?!
+  </h1>
+</template>
+```
+
+- v-if VS v-show
+v-if는 조건부 렌더링(런타임 시 조건이 변경되지 않는다면 사용)</br>
+v-show는 일단 렌더링을 해놓고 단순히 css속성만 가지고 화면에 출력여부 결정(자주 전환 시 사용)

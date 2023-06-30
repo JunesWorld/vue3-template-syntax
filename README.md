@@ -314,3 +314,16 @@ computed: {
   }
 }
 ```
+
+- 인라인 스타일 바인딩하기
+```html
+<div :style="{ color: activeColor, fontSize: fontSize +'px' }"></div>
+```
+```html
+data() {
+  return {
+    activeColor: 'red',
+    fontSize: 30
+  }
+}
+```

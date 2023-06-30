@@ -400,3 +400,16 @@ export default {
 }
 </script>
 ```
+
+## 조건부 렌더링
+
+- v-if
+v-if 디렉티브는 조건에 따라 블록을 렌더링할 때 사용합니다. 블록은 디렉티브의 표현식이 true 값을 반환할 때만 렌더링됩니다.
+```html
+<h1 v-if="awesome">Vue is awesome!<h1>
+```
+v-else 와 함께 "else 블록"을 추가하는 것도 가능합니다.
+```html
+<h1 v-if="awesome">Vue is awesome!</h1>
+<h1 v-else>Oh no</h1>
+```

@@ -274,3 +274,43 @@ export default {
 }
 </script>
 ```
+
+## HTML Class Binding
+
+```v-bind:class```에 객체를 전달하여 클래스를 동적으로 전환할 수 있습니다.</br>
+isActive data가 True면 active class가 연결
+```html
+<div :class="{ active: isActive }"></div>
+```
+- 바인딩 된 객체는 인라인 일 필요는 없습니다.
+```html
+<div :class="classObject"></div>
+```
+```html
+data() {
+  return {
+    classObject: {
+      active: true,
+      'text-danger': false
+    }
+  }
+}
+```
+
+- 객체를 반환하는 계산된 옵션인 computed에 바인딩 할 수 있다.
+```html
+data() {
+  return {
+    isActive: true,
+    error: null
+  }
+},
+computed: {
+  classObject() {
+    return {
+      active: this.isActive && !this.error
+      'text-danger': this.error && this.error.type ==='fatal'
+    }
+  }
+}
+```

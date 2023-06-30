@@ -232,3 +232,171 @@ export default {
 }
 </script>
 ```
+
+## Watch
+
+변경사항을 감시하는 Option(Console에 출력)
+```html
+<template>
+  <h1 @click="changeMessage">
+    {{ msg }}
+  </h1>
+  <h1>{{ reversedMessage }}</h1>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      msg: 'Hello?'
+    }
+  },
+  computed: {
+    reversedMessage() {
+      return this.msg.split('').reverse().join('')
+    }
+  },
+  // 변경 사항 감시하는 Option
+  // console에 출력
+  watch: {
+    msg(newValue) {
+      console.log('msg:', newValue)
+    },
+    reversedMessage(newValue) {
+      console.log('reversedMessage: ', newValue)
+    }
+  },
+  methods: {
+    changeMessage() {
+      this.msg = 'Good!'
+    }
+  }
+}
+</script>
+```
+
+## HTML Class Binding
+
+```v-bind:class```에 객체를 전달하여 클래스를 동적으로 전환할 수 있습니다.</br>
+isActive data가 True면 active class가 연결
+```html
+<div :class="{ active: isActive }"></div>
+```
+- 바인딩 된 객체는 인라인 일 필요는 없습니다.
+```html
+<div :class="classObject"></div>
+```
+```html
+data() {
+  return {
+    classObject: {
+      active: true,
+      'text-danger': false
+    }
+  }
+}
+```
+
+- 객체를 반환하는 계산된 옵션인 computed에 바인딩 할 수 있다.
+```html
+data() {
+  return {
+    isActive: true,
+    error: null
+  }
+},
+computed: {
+  classObject() {
+    return {
+      active: this.isActive && !this.error
+      'text-danger': this.error && this.error.type ==='fatal'
+    }
+  }
+}
+```
+
+- 인라인 스타일 바인딩하기
+```html
+<div :style="{ color: activeColor, fontSize: fontSize +'px' }"></div>
+```
+```html
+data() {
+  return {
+    activeColor: 'red',
+    fontSize: 30
+  }
+}
+```
+
+- App.vue(1)
+```html
+<template>
+  <!-- 
+    [Class Binding]
+    active class 추가 
+    - isActive data 영향
+    - true / false 
+  -->
+  <h1
+    :class="{ active: isActive }"
+    @click="activate">
+    Hello?!({{ isActive }})
+  </h1>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      isActive: false
+    }
+  },
+  methods: {
+    activate() {
+      this.isActive = true
+    }
+  }
+}
+</script>
+
+<style scoped>
+/* scoped = 이 파일 외에서는 영향x */
+  .active {
+    color: red;
+    font-weight: bold;
+  }
+</style>
+```
+
+- App.vue(2)
+```html
+<template>
+  <h1
+    :style="[fontStyle, backgroundStyle]"
+    @click="changeStyle">
+    Hello?!
+  </h1>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      fontStyle: {
+        color: 'orange',
+        fontSize: '30px'
+      },
+      backgroundStyle: {
+        backgroundColor: 'black'
+      }
+    }
+  },
+  methods: {
+    changeStyle() {
+      this.fontStyle.color = 'red'
+      this.fontStyle.fontSize = '50px'
+    }
+  }
+}
+</script>
+```

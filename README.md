@@ -449,3 +449,21 @@ export default {
 }
 </script>
 ```
+
+- template
+```html
+<template>
+  <button @click="handler">
+    Click me!
+  </button>
+  <!-- 
+    [template]
+    - 특정요소들을 그룹으로 보이거나 보이지않게하는 것 
+  -->
+  <template v-if="isShow">
+    <h1>Title</h1>
+    <p>Paragraph 1</p>
+    <p>Paragraph 2</p>
+  </template>
+</template>
+```

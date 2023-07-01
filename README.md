@@ -707,3 +707,130 @@ export default {
 }
 </script>
 ```
+
+## Event 수식어
+
+- Method Chaining 가능
+  - @click.prevent.once="handler
+- prevent : 기본 동작X
+- once : 특정 이벤트가 발생했을때 method를 한번만 실행
+
+```html
+<template>
+  <a
+    href="https://naver.com"
+    target="_blank"
+    @click.prevent="handler">
+    Naver
+  </a>
+</template>
+
+<script>
+export default {
+  methods: {
+    handler() {
+      console.log('ABC!')
+    }
+  }
+}
+</script>
+```
+
+- Event Bubbling : .stop
+- Event Capturing: .capture
+- .self
+```html
+<template>
+  <!-- 
+    [Event Bubbling]
+    - child 속성을 click 하면 부모 속성까지 출력
+    - B에 .stop 사용하면 해결
+
+    [Event Capturing] <-> [Event Bubbling]
+    - A에 .capture 사용 (BA -> AB)
+    - .cpature.stop (A만 출력)
+
+    [.self]
+    - 자신이 노출되어 있는 부분만 동작
+    - target과 current target이 일치할 경우만 동작
+   -->
+  <div
+    class="parent"
+    @click="handlerA">
+    <div
+      class="child"
+      @click="handlerB"></div>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    handlerA() {
+      console.log('A')
+    },
+    handlerB() {
+      console.log('B')
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+  .parent {
+    width: 200px;
+    height: 100px;
+    background-color: royalblue;
+    margin: 10px;
+    padding: 10px;
+    .child {
+      width: 100px;
+      height: 100px;
+      background-color: orange;
+    }
+  }
+</style>
+```
+
+- @wheel.passive
+- 
+```html
+<template>
+  <!-- 
+    @wheel 동작할 때마다 부하가 걸린다.
+    - .passive 사용
+    - 로직의 처리와 화면과 분리
+  -->
+  <div
+    class="parent"
+    @wheel="handler">
+    <div class="child"></div>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    handler(event) {
+      console.log(event)
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+  .parent {
+    width: 200px;
+    height: 100px;
+    background-color: royalblue;
+    margin: 10px;
+    padding: 10px;
+    overflow: auto; // scroll bar
+    .child {
+      width: 100px;
+      height: 2000px;
+      background-color: orange;
+    }
+  }
+</style>
+```

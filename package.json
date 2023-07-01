@@ -29,6 +29,7 @@
     "postcss-loader": "^7.3.3",
     "sass": "^1.63.3",
     "sass-loader": "^13.3.2",
+    "shortid": "^2.2.16",
     "style-loader": "^3.3.3",
     "vue-loader": "^17.0.1",
     "vue-style-loader": "^4.1.3",

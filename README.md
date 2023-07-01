@@ -642,3 +642,8 @@ export default {
 }
 </script>
 ```
+
+## 이벤트 핸들링
+
+- @click="" = v-on: click=""
+- click이란 이벤트가 발생했을 때 실행할 함수

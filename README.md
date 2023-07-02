@@ -862,3 +862,25 @@ export default {
 ```
 
 ## 폼 입력 바인딩
+
+- Inline 양방향 바인딩
+- 
+```html
+<template>
+  <h1>{{ msg }}</h1>
+  <input
+    type="text"
+    :value="msg"
+    @input="msg = $event.target.value" />
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      msg: 'Hello world!'
+    }
+  }
+}
+</script>
+```

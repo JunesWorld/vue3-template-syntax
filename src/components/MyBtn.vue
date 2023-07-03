@@ -1,21 +1,38 @@
 <template>
-  <!-- 
-    [최상위 요소] = Root Element
-    - <div></div> 
-    - 2개가 존재하기 때문에 App.vue에서 어디에 들어갈지 모름
-   -->
   <div class="btn">
     <slot></slot>
   </div>
-  <h1 v-bind="$attrs"></h1>
+  <!-- 
+    [dblclick] : 더블 클릭
+    - click을 원하는 이름으로 변경하여 사용 가능
+    - 데이터를 넘겨줄 수 있다. -> 123
+    - event 객체를 넘겨줄 수 있다 -> $event
+   -->
+  <h1 @dblclick="$emit('click', 123)">
+    ABC
+  </h1>
+  <input
+    type="text"
+    v-model="msg" />
 </template>
 
 <script>
-// inheritAttrs : 상속
 export default {
-  inheritAttrs: false,
-  created() {
-    console.log(this.$attrs)
+  emits: [
+    'click',
+    'changeMsg'
+  ],
+  // v-model 양방향 바인딩
+  data() {
+    return {
+      msg: ''
+    }
+  },
+  // msg 변경 시 App.vue에서 감시
+  watch: {
+    msg() {
+      this.$emit('changeMsg', this.msg)
+    }
   }
 }
 </script>

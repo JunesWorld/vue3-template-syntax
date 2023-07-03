@@ -1,39 +1,35 @@
 <template>
-  <h1>{{ msg }}</h1>
   <!-- 
-    [양방향 바인딩]
-    - 한글 작성시 최적
-    - @change : 바로 반응성이 오는 input과 다르게 tab or enter 키를 누르면 변경
-    - = v-model.lazy="msg"
+    1. [Components 재활용 가능]
+    2. color 변경시 MyBtn에서 props 설정 변경 후 사용
+    3. royalblue -> #000
+    4. 부모 - 자식 데이터 통신
+    5. MyBtn slot tag 자리에 문자열이 들어간다.
    -->
-  <!-- 
-    <input
-    type="text"
-    :value="msg"
-    @input="msg = $event.target.value" /> 
-  -->
-  <!-- 
-    [v-model.trim]
-    - 띄어쓰기 제거
-   -->
-  <!-- 
-    [숫자 타입 출력]
-   -->
-  <input
-    type="text"
-    v-model.number="msg" />
+  <MyBtn>Banana</MyBtn>
+  <MyBtn color="royalblue">
+    <span style="color: red;">Apple</span>
+  </MyBtn>
+  <MyBtn :color="color">
+    Cherry
+  </MyBtn>
+  <MyBtn
+    large
+    color="orange">
+    Orange
+  </MyBtn>
 </template>
 
 <script>
+import MyBtn from '~/components/MyBtn'
+
 export default {
+  components: {
+    MyBtn
+  },
   data() {
     return {
-      msg: 123
-    }
-  },
-  watch: {
-    msg() {
-      console.log(typeof this.msg)
+      color: '#000'
     }
   }
 }

@@ -1,35 +1,22 @@
 <template>
-  <!-- 
-    msg = props
-    Parent.vue는 Child.vue에 내용을 전달만 할 뿐인데 데이터를 정의해야한다.
-    - 해결 : provide, inject
-    - 주의 : provide는 반응성을 사용할 수 없다 -> computed 사용
-   -->
-  <button @click="message = 'Good?'">
-    Click!
-  </button>
-  <h1>App: {{ message }}</h1>
-  <Parent />
+  <!-- <h1 ref="hello">
+    Hello world!
+  </h1> -->
+  <Hello ref="hello" />
 </template>
 
 <script>
-import Parent from '~/components/Parent'
-import { computed } from 'vue'
-
+import Hello from '~/components/Hello'
+// created = 생성된 직후
+// mounted = 연결된 직후
+// 연결된 직후에만 refs 사용 가능
 export default {
   components: {
-    Parent
+    Hello
   },
-  data() {
-    return {
-      message: 'Hello world!'
-    }
-  },
-  // callback 함수를 만들어 반응성 가지고 싶은 data 반환
-  provide() {
-    return {
-      msg: computed(() => this.message)
-    }
+  mounted() {
+    // const h1El = document.querySelector('#hello')
+    console.log(this.$refs.hello.$refs.good)
   }
 }
 </script>

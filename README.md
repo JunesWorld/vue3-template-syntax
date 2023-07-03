@@ -940,3 +940,156 @@ export default {
 }
 </script>
 ```
+
+## 컴포넌트 기초
+
+- App.vue
+
+```html
+<template>
+  <!-- 
+    1. [Components 재활용 가능]
+    2. color 변경시 MyBtn에서 props 설정 변경 후 사용
+    3. royalblue -> #000
+    4. 부모 - 자식 데이터 통신
+    5. MyBtn slot tag 자리에 문자열이 들어간다.
+   -->
+  <MyBtn>Banana</MyBtn>
+  <MyBtn color="royalblue">
+    <span style="color: red;">Apple</span>
+  </MyBtn>
+  <MyBtn :color="color">
+    Cherry
+  </MyBtn>
+  <MyBtn
+    large
+    color="orange">
+    Orange
+  </MyBtn>
+</template>
+
+<script>
+import MyBtn from '~/components/MyBtn'
+
+export default {
+  components: {
+    MyBtn
+  },
+  data() {
+    return {
+      color: '#000'
+    }
+  }
+}
+</script>
+```
+
+- MyBtn.vue
+
+```html
+<template>
+  <div
+    :class="{ large }"
+    :style="{ backgroundColor: color }"  
+    class="btn">
+    <slot></slot>
+  </div>
+</template>
+
+<script>
+// props : 컴포넌트가 실행이 될 때 속성처럼 받아내는 내용을 정의해주는 옵션
+export default {
+  props: {
+    color: {
+      type: String,
+      default: 'gray'
+    },
+    large: {
+      type: Boolean,
+      default: false
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+  .btn {
+    display: inline-block;
+    margin: 4px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background-color: gray;
+    color: white;
+    cursor: pointer;
+    &.large {
+      font-size: 20px;
+      padding: 10px 20px;
+    }
+  }
+  
+</style>
+```
+
+## 컴포넌트 속성 상속
+
+- inheritAttrs
+- v-bind
+
+App.vue
+```html
+<template>
+  <MyBtn
+    class="JUNE"
+    style="color: red;"
+    title="Hello world!">
+    Banana
+  </MyBtn>
+</template>
+
+<script>
+import MyBtn from '~/components/MyBtn'
+
+export default {
+  components: {
+    MyBtn
+  }
+}
+</script>
+```
+MyBtn.vue
+```html
+<template>
+  <!-- 
+    [최상위 요소] = Root Element
+    - <div></div> 
+    - 2개가 존재하기 때문에 App.vue에서 어디에 들어갈지 모름
+   -->
+  <div class="btn">
+    <slot></slot>
+  </div>
+  <h1 v-bind="$attrs"></h1>
+</template>
+
+<script>
+// inheritAttrs : 상속
+export default {
+  inheritAttrs: false,
+  created() {
+    console.log(this.$attrs)
+  }
+}
+</script>
+
+<style scoped>
+  .btn {
+    display: inline-block;
+    margin: 4px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background-color: gray;
+    color: white;
+    cursor: pointer;
+  }
+  
+</style>
+```

@@ -1244,3 +1244,97 @@ MyBtn.vue
   
 </style>
 ```
+
+## 컴포넌트 Provide & Inject
+
+- 자식 컴포넌트로 데이터를 내려줄 때 = props
+- 부모 컴포넌트로 데이터를 올려줄 때 = provide, inject
+
+App.vue
+```html
+<template>
+  <!-- 
+    msg = props
+    Parent.vue는 Child.vue에 내용을 전달만 할 뿐인데 데이터를 정의해야한다.
+    - 해결 : provide, inject
+    - 주의 : provide는 반응성을 사용할 수 없다 -> computed 사용
+   -->
+  <button @click="message = 'Good?'">
+    Click!
+  </button>
+  <h1>App: {{ message }}</h1>
+  <Parent />
+</template>
+
+<script>
+import Parent from '~/components/Parent'
+import { computed } from 'vue'
+
+export default {
+  components: {
+    Parent
+  },
+  data() {
+    return {
+      message: 'Hello world!'
+    }
+  },
+  // callback 함수를 만들어 반응성 가지고 싶은 data 반환
+  provide() {
+    return {
+      msg: computed(() => this.message)
+    }
+  }
+}
+</script>
+```
+
+Parent.vue
+```html
+<template>
+  <Child />
+</template>
+
+<script>
+import Child from '~/components/Child'
+
+export default {
+  components: {
+    Child
+  }
+  // App.vue에서 msg를 받아 정의하고
+  // 다시 Child msg에 연결
+  // props: {
+  //   msg: {
+  //     type: String,
+  //     default: ''
+  //   }
+  // }
+}
+</script>
+```
+
+Child.vue
+```html
+<template>
+  <!-- 
+    msg = App.vue (Hello world!)
+    computed 계산된 데이터 출력 = value
+   -->
+  <div>
+    Child: {{ msg.value }}
+  </div>
+</template>
+
+<script>
+export default {
+  // props: {
+  //   msg: {
+  //     type: String,
+  //     default: ''
+  //   }
+  // }
+  inject: ['msg']
+}
+</script>
+```

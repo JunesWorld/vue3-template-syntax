@@ -864,7 +864,7 @@ export default {
 ## 폼 입력 바인딩
 
 - Inline 양방향 바인딩
-- 
+
 ```html
 <template>
   <!-- 

@@ -1,29 +1,35 @@
-
 <template>
   <!-- 
-    [Fallback contents]
-    - content 1순위 / slot 2순위
-    - content가 없으면 slot  tag 출력
-    [v-slot] : 순서 보장
-    - Banana = text / (B) = icon
-    - 약어 = #
+    msg = props
+    Parent.vue는 Child.vue에 내용을 전달만 할 뿐인데 데이터를 정의해야한다.
+    - 해결 : provide, inject
+    - 주의 : provide는 반응성을 사용할 수 없다 -> computed 사용
    -->
-  <MyBtn>
-    <template #icon>
-      <span>(B)</span>
-    </template>
-    <template #text>
-      <span>Banana</span>
-    </template>
-  </MyBtn>
+  <button @click="message = 'Good?'">
+    Click!
+  </button>
+  <h1>App: {{ message }}</h1>
+  <Parent />
 </template>
 
 <script>
-import MyBtn from '~/components/MyBtn'
+import Parent from '~/components/Parent'
+import { computed } from 'vue'
 
 export default {
   components: {
-    MyBtn
+    Parent
+  },
+  data() {
+    return {
+      message: 'Hello world!'
+    }
+  },
+  // callback 함수를 만들어 반응성 가지고 싶은 data 반환
+  provide() {
+    return {
+      msg: computed(() => this.message)
+    }
   }
 }
 </script>

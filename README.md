@@ -1186,3 +1186,61 @@ export default {
   
 </style>
 ```
+
+## 컴포넌트 slot
+
+App.vue
+```html
+
+<template>
+  <!-- 
+    [Fallback contents]
+    - content 1순위 / slot 2순위
+    - content가 없으면 slot  tag 출력
+    [v-slot] : 순서 보장
+    - Banana = text / (B) = icon
+    - 약어 = #
+   -->
+  <MyBtn>
+    <template #icon>
+      <span>(B)</span>
+    </template>
+    <template #text>
+      <span>Banana</span>
+    </template>
+  </MyBtn>
+</template>
+
+<script>
+import MyBtn from '~/components/MyBtn'
+
+export default {
+  components: {
+    MyBtn
+  }
+}
+</script>
+```
+
+MyBtn.vue
+```html
+<template>
+  <div class="btn">
+    <slot name="icon"></slot>
+    <slot name="text"></slot>
+  </div>
+</template>
+
+<style scoped>
+  .btn {
+    display: inline-block;
+    margin: 4px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background-color: gray;
+    color: white;
+    cursor: pointer;
+  }
+  
+</style>
+```

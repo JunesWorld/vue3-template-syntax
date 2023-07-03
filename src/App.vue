@@ -1,14 +1,20 @@
+
 <template>
   <!-- 
-    [emits] : event 상속 받아 사용
-    - click을 원하는 이름으로 변경하여 사용 가능
-    - 하지만 emit으로 받을 때 정확하게 변경
-    HTML = Dash-case로 작성
+    [Fallback contents]
+    - content 1순위 / slot 2순위
+    - content가 없으면 slot  tag 출력
+    [v-slot] : 순서 보장
+    - Banana = text / (B) = icon
+    - 약어 = #
    -->
-  <MyBtn
-    @click="log"
-    @change-msg="logMsg">
-    Banana
+  <MyBtn>
+    <template #icon>
+      <span>(B)</span>
+    </template>
+    <template #text>
+      <span>Banana</span>
+    </template>
   </MyBtn>
 </template>
 
@@ -18,15 +24,6 @@ import MyBtn from '~/components/MyBtn'
 export default {
   components: {
     MyBtn
-  },
-  methods: {
-    log(event) {
-      console.log('Click!!')
-      console.log(event)
-    },
-    logMsg(msg) {
-      console.log(msg) // this.msg
-    }
   }
 }
 </script>

@@ -1032,7 +1032,7 @@ export default {
 
 ## 컴포넌트 속성 상속
 
-- inheritAttrs
+- inheritAttrs : 상속제거
 - v-bind
 
 App.vue

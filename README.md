@@ -1249,6 +1249,7 @@ MyBtn.vue
 
 - 자식 컴포넌트로 데이터를 내려줄 때 = props
 - 부모 컴포넌트로 데이터를 올려줄 때 = provide, inject
+- 기본적으로 반응성을 가지지 않기 때문에 computed를 사용
 
 App.vue
 ```html

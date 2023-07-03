@@ -1,29 +1,26 @@
 <template>
-  <div
-    :class="{ large }"
-    :style="{ backgroundColor: color }"  
-    class="btn">
+  <!-- 
+    [최상위 요소] = Root Element
+    - <div></div> 
+    - 2개가 존재하기 때문에 App.vue에서 어디에 들어갈지 모름
+   -->
+  <div class="btn">
     <slot></slot>
   </div>
+  <h1 v-bind="$attrs"></h1>
 </template>
 
 <script>
-// props : 컴포넌트가 실행이 될 때 속성처럼 받아내는 내용을 정의해주는 옵션
+// inheritAttrs : 상속
 export default {
-  props: {
-    color: {
-      type: String,
-      default: 'gray'
-    },
-    large: {
-      type: Boolean,
-      default: false
-    }
+  inheritAttrs: false,
+  created() {
+    console.log(this.$attrs)
   }
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped>
   .btn {
     display: inline-block;
     margin: 4px;
@@ -32,10 +29,6 @@ export default {
     background-color: gray;
     color: white;
     cursor: pointer;
-    &.large {
-      font-size: 20px;
-      padding: 10px 20px;
-    }
   }
   
 </style>

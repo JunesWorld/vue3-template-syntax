@@ -1,27 +1,39 @@
 <template>
-  <!-- 
-    [v-model]
-    - :value 부터 삭제 후 사용
-    - v-model="msg"
-    - 주의사항 : 한글 입력시 단방향 바인딩 사용할 것(:value)
-   -->
   <h1>{{ msg }}</h1>
-  <input
+  <!-- 
+    [양방향 바인딩]
+    - 한글 작성시 최적
+    - @change : 바로 반응성이 오는 input과 다르게 tab or enter 키를 누르면 변경
+    - = v-model.lazy="msg"
+   -->
+  <!-- 
+    <input
     type="text"
     :value="msg"
-    @input="msg = $event.target.value" />
-  <h1>{{ checked }}</h1>
+    @input="msg = $event.target.value" /> 
+  -->
+  <!-- 
+    [v-model.trim]
+    - 띄어쓰기 제거
+   -->
+  <!-- 
+    [숫자 타입 출력]
+   -->
   <input
-    type="checkbox"
-    v-model="checked" />
+    type="text"
+    v-model.number="msg" />
 </template>
 
 <script>
 export default {
   data() {
     return {
-      msg: 'Hello world!',
-      checked: false
+      msg: 123
+    }
+  },
+  watch: {
+    msg() {
+      console.log(typeof this.msg)
     }
   }
 }

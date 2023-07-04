@@ -1,39 +1,50 @@
 <template>
-  <div @click="increase">
-    {{ count }}
-  </div>
+  <h1 @click="increase">
+    {{ count }} / {{ doubleCount }}
+  </h1>
+  <h1 @click="changeMessage">
+    {{ message }} / {{ reversedMessage }}
+  </h1>
 </template>
 
 <script>
-// 반응성 추가
-import { ref } from 'vue'
-
 export default {
-  // data() {
-  //   return {
-  //     count: 0
-  //   }
-  // },
-  // methods: {
-  //   increase() {
-  //     this.count += 1
-  //   }
-  // },
-  
-  // [setup Method]
-  // - code 최적화 composition API
-  // - 기본적으로 정의한 count는 반응성을 가지지 X
-  // |- ref로 count라는 객체 데이터 반환할 수 있도록 초기값 생성
-  // |- value 속성 사용
-   setup() {
-    let count = ref(0)
-    function increase() {
-      count.value +=1
-    }
+  data() {
     return {
-      count,
-      increase
+      count: 0,
+      message: 'Hello world!'
     }
-   }
+  },
+  computed: {
+    doubleCount() {
+      return this.count * 2
+    },
+    reversedMessage() {
+      return this.message.split('').reverse().join('')
+    }
+  },
+  // 감시
+  watch: {
+    message(newValue) {
+      console.log(newValue)
+    }
+  },
+  // 라이프 사이클
+  // 생성 직후
+  created() {
+    console.log(this.message)
+  },
+  // 연결 직후
+  mounted() {
+    console.log(this.count)
+  },
+  methods: {
+    increase() {
+      this.count += 1
+    },
+    changeMessage() {
+      this.message = 'Good?!'
+    }
+  }
 }
 </script>

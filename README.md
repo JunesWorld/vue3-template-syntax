@@ -1423,3 +1423,118 @@ export default {
 }
 </script>
 ```
+
+## 기본 옵션과 라이프 사이클
+
+- App.vue = AppComposition.vue
+
+App.vue
+
+```html
+<template>
+  <h1 @click="increase">
+    {{ count }} / {{ doubleCount }}
+  </h1>
+  <h1 @click="changeMessage">
+    {{ message }} / {{ reversedMessage }}
+  </h1>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      count: 0,
+      message: 'Hello world!'
+    }
+  },
+  computed: {
+    doubleCount() {
+      return this.count * 2
+    },
+    reversedMessage() {
+      return this.message.split('').reverse().join('')
+    }
+  },
+  // 감시
+  watch: {
+    message(newValue) {
+      console.log(newValue)
+    }
+  },
+  // 라이프 사이클
+  // 생성 직후
+  created() {
+    console.log(this.message)
+  },
+  // 연결 직후
+  mounted() {
+    console.log(this.count)
+  },
+  methods: {
+    increase() {
+      this.count += 1
+    },
+    changeMessage() {
+      this.message = 'Good?!'
+    }
+  }
+}
+</script>
+```
+
+AppComposition.vue
+
+```html
+<template>
+  <h1 @click="increase">
+    {{ count }}
+  </h1>
+  <h1 @click="changeMessage">
+    {{ message }}
+  </h1>
+</template>
+
+<script>
+import { ref, computed, watch, onMounted } from 'vue'
+export default {
+  setup() {
+    // count
+    const count = ref(0)
+    const doubleCount = computed(() => {
+      return count.value * 2
+    })
+    function increase() {
+      count.value += 1
+    }
+
+    // message
+    const message = ref('Hello world!')
+    const reversedMessage = computed(() => {
+      return message.value.split('').reverse().join('')
+    })
+    watch(message, (newValue) => {
+      console.log(newValue)
+    })
+    function changeMessage() {
+      message.value = 'Good?!'
+    }
+    // created
+    console.log(message.value)
+
+    onMounted(() => {
+      console.log(count.value)
+    }) 
+
+    return {
+      count,
+      doubleCount,
+      increase,
+      message,
+      reversedMessage,
+      changeMessage
+    }
+  }
+}
+</script>
+```
